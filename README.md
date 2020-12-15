@@ -1,5 +1,8 @@
 # README
-Online Psychological Experiment Advent Calendar 2020、16日目のサンプルコード
+Online Psychological Experiment Advent Calendar 2020、16日目のサンプルコードです。
+
+## コードについて
+advent2020.htmlが実験ファイルになります。RStudioでjsPsychを作成している人のために、R Markdownファイルも用意しています。厳密コードが一字一句htmlファイルと一致するわけではありませんが、これをknitすると同じ課題のhtmlファイルを作成できます。
 
 ## 課題概要
 今回公開している実験プログラムは以下のリンクにアクセスすると行えます。
