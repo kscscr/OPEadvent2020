@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="noname" />
+<title>experiment</title>
+<script src="jspsych-6.1.0/jspsych.js"></script>
+<script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+<script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+<script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+<script src="jspsych-6.1.0/plugins/jspsych-iat-html.js"></script>
+<script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
+<link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css"></link>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Merry Christmas</h1>
+<h4 class="author">Santa</h4>
+<h4 class="date">2020/12/16</h4>
+
+<script type="text/javascript">
+
+var pc_check = {
+  type: "html-keyboard-response",
+  stimulus:"<p style = 'font-size:1.5em; text-align: center'>パソコンでアクセスしているかの確認を行います。スペースキーを押して次へ進んでください</p>",
+  choices: ["space"]
+};
+
+
+var name_trial= {
+  type: 'survey-text',
+  preamble:'<p>次に行う実験でどうしても必要なため記入をお願いしております。</p>'+' <p>ここで収集した名前については、次の課題でのみ使用し、分析には使用致しません。</p>'+'<p>プライバシー保護には十分配慮致します。</p>',
+  questions: [
+        {prompt: '名字（姓）を入力してください（例：田中 太郎さんなら：田中）', name: 'name_up', required:'True'},
+        {prompt: '名前（名）を入力してください（例：田中 太郎さんなら：太郎）', name: 'name_down', required:'True'}
+      ],
+  button_label: '次へ',
+  on_finish: function(data){
+    //上で質問した名前を取得
+    nameup = JSON.parse(data.responses).name_up;
+    namedo = JSON.parse(data.responses).name_down;
+    
+    //addPropertiesに姓・名を保存
+    jsPsych.data.addProperties({name01: nameup});
+    jsPsych.data.addProperties({name02: namedo});
+  }
+};
+
+
+//教示文を読んで入力してもらう
+var iat_instruction = {
+  type: "html-keyboard-response",
+  stimulus:"<p>IATが始まります。</p>"+"<p>画面中央に表示される単語が、左上の<b>「快い」</b>または<b>「自己」</b>のカテゴリーに当てはまると思ったら<b>「E」</b>キーを、<br>右上の<b>「不快な」</b>または<b>「他者」</b>のカテゴリーに当てはまると思ったら<b>「I」</b>キーを押してください。</p>"+ "<p><b>左右のカテゴリーは固定で、中央の単語が変わります。</b></p>"+"<p>間違えるとX（バツ）が中央に表示されるので、押したキーと反対のキーを押してください</br><b>スペースキー</b>を押すと開始します。</p>"+"<p style = 'font-size: 1.5em;'>単語が表示されたら、なるべく早く回答してください。</p>",
+  choices: ["space"]
+};
+
+
+
+
+
+// SC-IAT：研究1バージョン
+//Block1:self+good vs bad
+var trial01 = {
+  timeline:[
+    {
+      type: 'iat-html',
+      stimulus: jsPsych.timelineVariable('stimulus'),
+      stim_key_association: jsPsych.timelineVariable('stim_key_association'),
+      html_when_wrong: '<span style="color: red; font-size: 80px">X</span>',
+      bottom_instructions: '<p>間違えるとバツが表示されます。バツが表示されたら反対のキーを押してください</p>',
+      force_correct_key_press: true,
+      display_feedback: true,
+      left_category_key: 'E',
+      right_category_key: 'I',
+      left_category_label: ['快い','自己'],
+      right_category_label: ['不快な', '他者'],
+      response_ends_trial: true
+    }
+    ],  
+  //IATで使う刺激
+  timeline_variables: [
+    //良い
+    {stimulus: 'うつくしい', stim_key_association: 'left'},
+    {stimulus: 'うれしい', stim_key_association: 'left'},
+    {stimulus: 'すばらしい', stim_key_association: 'left'},
+    {stimulus: 'やさしい', stim_key_association: 'left'},
+    //悪い
+    {stimulus: 'きたない', stim_key_association: 'right'},
+    {stimulus: 'みにくい', stim_key_association: 'right'},
+    {stimulus: 'いやしい', stim_key_association: 'right'},
+    {stimulus: 'ひどい', stim_key_association: 'right'},
+    
+    //自己
+    {stimulus: function(){
+      var named = jsPsych.data.get().last(1).values()[0].name01;
+      return named;
+    }, stim_key_association: 'left'},
+    {stimulus: function(){
+      var named = jsPsych.data.get().last(1).values()[0].name02;
+      return named;
+    }, stim_key_association: 'left'},
+    {stimulus: '自分', stim_key_association: 'left'},
+    {stimulus: '私', stim_key_association: 'left'},
+    
+    //他者
+    {stimulus: '友人', stim_key_association: 'right'},
+    {stimulus: '知人', stim_key_association: 'right'},
+    {stimulus: '他人', stim_key_association: 'right'},
+    {stimulus: '知り合い', stim_key_association: 'right'}
+    ],
+  repetitions: 1
+};
+
+
+
+
+/* 実験の提示の順番 */
+var timeline = [];
+timeline.push(pc_check);
+
+timeline.push(name_trial);
+
+timeline.push(iat_instruction);
+timeline.push({
+  type: 'fullscreen',
+  fullscreen_mode: true
+});
+timeline.push(trial01);
+timeline.push({
+  type: 'fullscreen',
+  fullscreen_mode: false
+});
+
+
+
+/* 実験開始 */
+jsPsych.init({
+    timeline: timeline,
+    on_finish: function() {
+    jsPsych.data.displayData();
+  }
+});
+
+
+</script>
+
+
+
+<!-- code folding -->
+
+
+
+</body>
+</html>
