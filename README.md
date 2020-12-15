@@ -5,7 +5,7 @@ Online Psychological Experiment Advent Calendar 2020、16日目のサンプル�
 今回公開している実験プログラムは以下のリンクにアクセスすると行えます。
 [https://kscscr.github.io/OPEadvent2020/advent2020.html](https://kscscr.github.io/OPEadvent2020/advent2020.html)
 
-プログラムの流れとしては、ざっくり以下の通り
+プログラムの流れとしては、ざっくり以下の通りです。それほど時間がかからずに終わると思います。
 1. 説明
 2. パソコンでアクセスしているかどうかの確認
 3. 名前の取得
