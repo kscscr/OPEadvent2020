@@ -33,6 +33,17 @@
 
 <script type="text/javascript">
 
+var inst = {
+    type: 'instructions',
+    pages: [
+        '<p style = "font-size:1.5em; text-align: center">Online Psychological Experiment Advent Calendar 2020 16日目</p>'+'<p style = "font-size:1.5em; text-align: center">サンプルIATです。</p>'
+    ],
+    allow_backward: false,
+    show_clickable_nav: true,
+    button_label_next: '次へ'
+}
+
+
 var pc_check = {
   type: 'html-keyboard-response',
   stimulus:'<p style = "font-size:1.5em; text-align: center">パソコンでアクセスしているかの確認を行います。スペースキーを押して次へ進んでください</p>',
@@ -121,27 +132,27 @@ var trial01 = {
     {stimulus: '他人', stim_key_association: 'right'},
     {stimulus: '知り合い', stim_key_association: 'right'}
     ],
+  randomize_order: true,
   repetitions: 1
 };
 
 
 var end_inst = {
   type: 'html-keyboard-response',
-  stimulus:'<p  style = "font-size: 1.5em;">サンプルは終了です。</p>'+'<p>スペースキーを押すと、結果が画面に表示されます。</p>',
+  stimulus:'<p  style = "font-size: 1.5em;">サンプルは終了です。</p>'+'<p>スペースキーを押すと、結果が画面に表示されます。</p>'+'<p>結果に興味の無い方は、このままタブを閉じて頂いて大丈夫です。（結果を確認した後も自由に閉じてください。）</p>',
   choices: ['space']
 };
 
 /* 実験の提示の順番 */
 var timeline = [];
+timeline.push(inst);
 timeline.push(pc_check);
-
 timeline.push(name_trial);
-
-timeline.push(iat_inst);
 timeline.push({
   type: 'fullscreen',
   fullscreen_mode: true
 });
+timeline.push(iat_inst);
 timeline.push(trial01);
 timeline.push({
   type: 'fullscreen',
