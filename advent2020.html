@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="noname" />
+<meta name="Merry Christmas" content="Santa" />
 <title>experiment</title>
 <script src="jspsych-6.1.0/jspsych.js"></script>
 <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
@@ -34,15 +34,15 @@
 <script type="text/javascript">
 
 var pc_check = {
-  type: "html-keyboard-response",
-  stimulus:"<p style = 'font-size:1.5em; text-align: center'>パソコンでアクセスしているかの確認を行います。スペースキーを押して次へ進んでください</p>",
-  choices: ["space"]
+  type: 'html-keyboard-response',
+  stimulus:'<p style = "font-size:1.5em; text-align: center">パソコンでアクセスしているかの確認を行います。スペースキーを押して次へ進んでください</p>',
+  choices: ['space']
 };
 
 
 var name_trial= {
   type: 'survey-text',
-  preamble:'<p>次に行う実験でどうしても必要なため記入をお願いしております。</p>'+' <p>ここで収集した名前については、次の課題でのみ使用し、分析には使用致しません。</p>'+'<p>プライバシー保護には十分配慮致します。</p>',
+  preamble:'<p>次に行う実験でどうしても必要なため記入をお願いしております。</p>'+' <p>収集した名前は、次の課題でのみ使用し、分析には使用致しません。</p>'+'<p>プライバシー保護には十分配慮致します。</p>',
   questions: [
         {prompt: '名字（姓）を入力してください（例：田中 太郎さんなら：田中）', name: 'name_up', required:'True'},
         {prompt: '名前（名）を入力してください（例：田中 太郎さんなら：太郎）', name: 'name_down', required:'True'}
@@ -61,10 +61,10 @@ var name_trial= {
 
 
 //教示文を読んで入力してもらう
-var iat_instruction = {
-  type: "html-keyboard-response",
-  stimulus:"<p>IATが始まります。</p>"+"<p>画面中央に表示される単語が、左上の<b>「快い」</b>または<b>「自己」</b>のカテゴリーに当てはまると思ったら<b>「E」</b>キーを、<br>右上の<b>「不快な」</b>または<b>「他者」</b>のカテゴリーに当てはまると思ったら<b>「I」</b>キーを押してください。</p>"+ "<p><b>左右のカテゴリーは固定で、中央の単語が変わります。</b></p>"+"<p>間違えるとX（バツ）が中央に表示されるので、押したキーと反対のキーを押してください</br><b>スペースキー</b>を押すと開始します。</p>"+"<p style = 'font-size: 1.5em;'>単語が表示されたら、なるべく早く回答してください。</p>",
-  choices: ["space"]
+var iat_inst = {
+  type: 'html-keyboard-response',
+  stimulus:'<p  style = "font-size: 1.5em;">IATが始まります。</p>'+'<p>画面中央に表示される単語が、</p>'+'左上の<b>「快い」</b>または<b>「自己」</b>のカテゴリーに当てはまると思ったら<b>「E」</b>キーを、<br>右上の<b>「不快な」</b>または<b>「他者」</b>のカテゴリーに当てはまると思ったら<b>「I」</b>キーを押してください。</p>'+'<p>間違えるとX（バツ）が中央に表示されるので、押したキーと反対のキーを押してください</br><b>スペースキー</b>を押すと開始します。</p>'+'<p style = "font-size: 1.5em;">単語が表示されたら、なるべく早く回答してください。</p>',
+  choices: ['space']
 };
 
 
@@ -125,7 +125,11 @@ var trial01 = {
 };
 
 
-
+var end_inst = {
+  type: 'html-keyboard-response',
+  stimulus:'<p  style = "font-size: 1.5em;">サンプルは終了です。</p>'+'<p>スペースキーを押すと、結果が画面に表示されます。</p>',
+  choices: ['space']
+};
 
 /* 実験の提示の順番 */
 var timeline = [];
@@ -133,7 +137,7 @@ timeline.push(pc_check);
 
 timeline.push(name_trial);
 
-timeline.push(iat_instruction);
+timeline.push(iat_inst);
 timeline.push({
   type: 'fullscreen',
   fullscreen_mode: true
@@ -143,7 +147,7 @@ timeline.push({
   type: 'fullscreen',
   fullscreen_mode: false
 });
-
+timeline.push(end_inst);
 
 
 /* 実験開始 */
