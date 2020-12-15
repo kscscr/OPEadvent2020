@@ -1,4 +1,4 @@
-# OPEadvent2020
+# README
 Online Psychological Experiment Advent Calendar 2020、16日目のサンプルコード
 
 ## 課題概要
